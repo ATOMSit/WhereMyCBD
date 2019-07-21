@@ -2,12 +2,17 @@
 
 namespace App\Http\Requests;
 
-use App\User;
+use ArondeParon\RequestSanitizer\Sanitizers\Capitalize;
+use ArondeParon\RequestSanitizer\Sanitizers\Lowercase;
+use ArondeParon\RequestSanitizer\Sanitizers\TrimDuplicateSpaces;
+use ArondeParon\RequestSanitizer\Sanitizers\Uppercase;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use ArondeParon\RequestSanitizer\Traits\SanitizesInputs;
 
 class UserRequest extends FormRequest
 {
+    use SanitizesInputs;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -96,24 +101,73 @@ class UserRequest extends FormRequest
 
             'password.required' => '',
 
-            'url_facebook.nullable'=>'',
-            'url_facebook.url'=>'',
-            'url_facebook.regex'=>'',
+            'url_facebook.nullable' => '',
+            'url_facebook.url' => '',
+            'url_facebook.regex' => '',
 
-            'url_instagram.nullable'=>'',
-            'url_instagram.url'=>'',
-            'url_instagram.regex'=>'',
+            'url_instagram.nullable' => '',
+            'url_instagram.url' => '',
+            'url_instagram.regex' => '',
 
-            'url_twitter.nullable'=>'',
-            'url_twitter.url'=>'',
-            'url_twitter.regex'=>'',
+            'url_twitter.nullable' => '',
+            'url_twitter.url' => '',
+            'url_twitter.regex' => '',
 
-            'url_linkedin.nullable'=>'',
-            'url_linkedin.url'=>'',
-            'url_linkedin.regex'=>'',
+            'url_linkedin.nullable' => '',
+            'url_linkedin.url' => '',
+            'url_linkedin.regex' => '',
 
-            'url_website.nullable'=>'',
-            'url_website.url'=>''
+            'url_website.nullable' => '',
+            'url_website.url' => ''
         ];
     }
+
+    /**
+     * Inputs modification rules
+     *
+     * @var array
+     */
+    protected $sanitizers = [
+        'first_name' => [
+            Capitalize::class,
+            TrimDuplicateSpaces::class
+        ],
+        'last_name' => [
+            Uppercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'description' => [
+            TrimDuplicateSpaces::class
+        ],
+        'birthdate' => [
+
+        ],
+        'email' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'password' => [
+
+        ],
+        'url_facebook' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'url_instagram' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'url_twitter' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'url_linkedin' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ],
+        'url_website' => [
+            Lowercase::class,
+            TrimDuplicateSpaces::class
+        ]
+    ];
 }

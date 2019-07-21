@@ -4,8 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d4bf9ac7f4a933030e46a346ee2917",
+    "content-hash": "bb98d4fcc6e1a60379851d8282707b51",
     "packages": [
+        {
+            "name": "arondeparon/laravel-request-sanitizer",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ArondeParon/laravel-request-sanitizer.git",
+                "reference": "2c7d68834524450bd5739c9931f4d0b4c6dd0f1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ArondeParon/laravel-request-sanitizer/zipball/2c7d68834524450bd5739c9931f4d0b4c6dd0f1a",
+                "reference": "2c7d68834524450bd5739c9931f4d0b4c6dd0f1a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^5.5,<5.9",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0",
+                "phpunit/phpunit": "^6.2|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ArondeParon\\RequestSanitizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aron Rotteveel",
+                    "email": "rotteveel.aron@gmail.com",
+                    "homepage": "https://github.com/arondeparon",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An easy to use request sanitizer that allows you to sanitize your form data before validating it.",
+            "homepage": "https://github.com/arondeparon/laravel-request-sanitizer",
+            "keywords": [
+                "arondeparon",
+                "form",
+                "laravel",
+                "request",
+                "sanitizer",
+                "validation"
+            ],
+            "time": "2019-05-04T13:40:33+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
