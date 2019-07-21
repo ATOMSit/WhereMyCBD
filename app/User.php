@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Watson\Validating\ValidatingTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, ValidatingTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +43,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
+    public $casts = [
         'first_name' => 'string',
         'last_name' => 'string',
         'description' => 'string',
