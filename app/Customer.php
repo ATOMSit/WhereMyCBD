@@ -16,7 +16,16 @@ class Customer extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'description', 'birthdate', 'email', 'password', 'url_facebook', 'url_instagram', 'url_twitter', 'url_linkedin', 'url_website'
+    ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id', 'email_verified_at', 'remember_token', 'created_at', 'updated_at'
     ];
 
     /**
@@ -25,13 +34,35 @@ class Customer extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    public $casts = [
+        'first_name' => 'string',
+        'last_name' => 'string',
+        'description' => 'string',
+        'birthdate' => 'date',
+        'email' => 'string',
+        'email_verified_at' => 'datetime',
+        'password' => 'string',
+        'url_facebook' => 'string',
+        'url_instagram' => 'string',
+        'url_twitter' => 'string',
+        'url_linkedin' => 'string',
+        'url_website' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
