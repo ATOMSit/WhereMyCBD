@@ -76,49 +76,39 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => 'A title is required',
-            'first_name.string' => 'A title is required',
-            'first_name.min' => 'A title is required',
-            'first_name.max' => 'A title is required',
-
-            'last_name.required' => 'A title is required',
-            'last_name.string' => 'A title is required',
-            'last_name.min' => 'A title is required',
-            'last_name.max' => 'A title is required',
-
-            'description.nullable' => '',
-            'description.string' => '',
-            'description.min' => '',
-            'description.max' => '',
-
-            'birthdate.nullable' => '',
-            'birthdate.date' => '',
-
-            'email.required' => '',
-            'email.email' => '',
-            'email.max' => '',
-            'email.unique' => '',
-
-            'password.required' => '',
-
-            'url_facebook.nullable' => '',
-            'url_facebook.url' => '',
-            'url_facebook.regex' => '',
-
-            'url_instagram.nullable' => '',
-            'url_instagram.url' => '',
-            'url_instagram.regex' => '',
-
-            'url_twitter.nullable' => '',
-            'url_twitter.url' => '',
-            'url_twitter.regex' => '',
-
-            'url_linkedin.nullable' => '',
-            'url_linkedin.url' => '',
-            'url_linkedin.regex' => '',
-
-            'url_website.nullable' => '',
-            'url_website.url' => ''
+            'first_name.required' => trans('user.fields.first_name.validations.required'),
+            'first_name.string' => trans('user.fields.first_name.validations.string'),
+            'first_name.min' => trans('user.fields.first_name.validations.min'),
+            'first_name.max' => trans('user.fields.first_name.validations.max'),
+            'last_name.required' => trans('user.fields.last_name.validations.required'),
+            'last_name.string' => trans('user.fields.last_name.validations.string'),
+            'last_name.min' => trans('user.fields.last_name.validations.min'),
+            'last_name.max' => trans('user.fields.last_name.validations.max'),
+            'description.nullable' => trans('user.fields.description.validations.nullable'),
+            'description.string' => trans('user.fields.description.validations.string'),
+            'description.min' => trans('user.fields.description.validations.min'),
+            'description.max' => trans('user.fields.description.validations.max'),
+            'birthdate.nullable' => trans('user.fields.birthdate.validations.nullable'),
+            'birthdate.date' => trans('user.fields.birthdate.validations.date'),
+            'email.required' => trans('user.fields.email.validations.required'),
+            'email.email' => trans('user.fields.email.validations.email'),
+            'email.max' => trans('user.fields.email.validations.max'),
+            'email.unique' => trans('user.fields.email.validations.unique'),
+            'password.required' => trans('user.fields.paswword.validations.required'),
+            'url_facebook.nullable' => trans('user.fields.url_facebook.validations.nullable'),
+            'url_facebook.url' => trans('user.fields.url_facebook.validations.url'),
+            'url_facebook.regex' => trans('user.fields.url_facebook.validations.regex'),
+            'url_instagram.nullable' => trans('user.fields.url_instagram.validations.nullable'),
+            'url_instagram.url' => trans('user.fields.url_instagram.validations.url'),
+            'url_instagram.regex' => trans('user.fields.url_instagram.validations.regex'),
+            'url_twitter.nullable' => trans('user.fields.url_twitter.validations.nullable'),
+            'url_twitter.url' => trans('user.fields.url_twitter.validations.url'),
+            'url_twitter.regex' => trans('user.fields.url_twitter.validations.regex'),
+            'url_linkedin.nullable' => trans('user.fields.url_linkedin.validations.nullable'),
+            'url_linkedin.url' => trans('user.fields.url_linkedin.validations.url'),
+            'url_linkedin.regex' => trans('user.fields.url_linkedin.validations.regex'),
+            'url_website.nullable' => trans('user.fields.url_website.validations.nullable'),
+            'url_website.url' => trans('user.fields.url_website.validations.url')
         ];
     }
 
