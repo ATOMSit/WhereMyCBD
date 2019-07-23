@@ -5,11 +5,10 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Watson\Validating\ValidatingTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, ValidatingTrait;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -3,12 +3,15 @@
 namespace App;
 
 use App\Notifications\CustomerResetPassword;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
 {
     use Notifiable;
+
+    protected $guard = 'customer';
 
     /**
      * The attributes that are mass assignable.
@@ -68,5 +71,15 @@ class Customer extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomerResetPassword($token));
+    }
+
+    /**
+     * Returns the websites of this customer
+     *
+     * @return HasMany
+     */
+    public function Websites(): HasMany
+    {
+        return $this->hasMany(Website::class);
     }
 }

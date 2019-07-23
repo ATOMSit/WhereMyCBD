@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\CustomerAuth;
 
+use App\Forms\AuthForms\LoginForm;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class LoginController extends Controller
 {
+    use FormBuilderTrait;
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -19,7 +23,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers, LogsoutGuard {
         LogsoutGuard::logout insteadof AuthenticatesUsers;
     }
@@ -48,7 +51,11 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('customer.auth.login');
+        $form = $this->form(LoginForm::class, [
+            'method' => 'POST',
+            'url' => route('customer.login')
+        ]);
+        return view('customer.auth.login', ['form' => $form]);
     }
 
     /**

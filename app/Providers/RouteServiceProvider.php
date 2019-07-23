@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Website;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::model('website', Website::class);
     }
 
     /**
@@ -41,7 +42,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapCustomerRoutes();
 
-        //
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -60,6 +61,25 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => $this->namespace,
         ], function ($router) {
             require base_path('routes/customer.php');
+        });
+    }
+
+    /**
+     * Define the "customer" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::group([
+            'middleware' => ['web'],
+            'prefix' => 'admin',
+            'as' => 'admin.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/admin.php');
         });
     }
 
