@@ -1,37 +1,20 @@
 <?php
 
-
 namespace App\Repositories;
 
+use App\Http\Requests\UserRequest;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 interface UserRepositoryInterface
 {
-    /**
-     * Get's a post by it's ID
-     *
-     * @param int
-     */
-    public function get($user_id);
+    public function get(User $user, int $id);
 
-    /**
-     * Get's all posts.
-     *
-     * @return mixed
-     */
-    public function all();
+    public function all(User $user);
 
-    /**
-     * Deletes a post.
-     *
-     * @param int
-     */
-    public function delete($user_id);
+    public function store(UserRequest $request);
 
-    /**
-     * Updates a post.
-     *
-     * @param int
-     * @param array
-     */
-    public function update($user_id, array $user_data);
+    public function update(User $user, UserRequest $request);
+
+    public function delete(User $user, int $id);
 }

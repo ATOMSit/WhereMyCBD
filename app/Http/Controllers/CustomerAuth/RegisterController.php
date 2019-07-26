@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\CustomerAuth;
 
 use App\Customer;
+use App\Forms\AuthForms\RegisterForm;
+use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\UserRequest;
+use App\Repositories\CustomerRepositoryInterface;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -10,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+    use FormBuilderTrait;
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -23,6 +30,8 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    protected $customer;
+
     /**
      * Where to redirect users after login / registration.
      *
@@ -35,41 +44,19 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CustomerRepositoryInterface $customerRepository)
     {
         $this->middleware('customer.guest');
+        $this->customer = $customerRepository;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function store(CustomerRequest $request)
     {
-        return Validator::make($data, [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:customers,email',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+        $user = $this->customer->store($request);
+        $this->guard()->login($user);
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param array $data
-     * @return Customer
-     */
-    protected function create(array $data)
-    {
-        return Customer::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 
     /**
@@ -79,7 +66,11 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('customer.auth.register');
+        $form = $this->form(RegisterForm::class, [
+            'method' => 'POST',
+            'url' => route('admin.register_store')
+        ]);
+        return view('customer.auth.register')->with('form', $form);
     }
 
     /**

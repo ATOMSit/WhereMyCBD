@@ -37,7 +37,7 @@ class Website extends SystemModel implements WebsiteContract
      */
     public function getRouteKeyName()
     {
-        return 'id';
+        return 'uuid';
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mutators\CustomerMutator;
 use App\Notifications\CustomerResetPassword;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
 {
-    use Notifiable;
+    use CustomerMutator, Notifiable;
 
     protected $guard = 'customer';
 
@@ -46,6 +47,7 @@ class Customer extends Authenticatable
      * @var array
      */
     public $casts = [
+        'id' => 'integer',
         'first_name' => 'string',
         'last_name' => 'string',
         'description' => 'string',
@@ -60,6 +62,17 @@ class Customer extends Authenticatable
         'url_website' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'brithdate',
+        'created_at',
+        'updated_at'
     ];
 
     /**

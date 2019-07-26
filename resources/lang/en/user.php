@@ -43,8 +43,6 @@ return [
         'password' => [
             'validations' => [
                 'required' => "Le champ mot de passe est requis.",
-                'min' => "Le mot de passe doit être composé au minimum de 6 caractères.",
-                'regex' => "Le mot de passe doit être composé d'une minuscule, d'une majuscule et d'un chiffre."
             ]
         ],
         'url_facebook' => [

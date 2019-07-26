@@ -23,6 +23,8 @@
     <link href="{{asset('application/css/skins/header/menu/light.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('application/css/skins/brand/dark.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('application/css/skins/aside/dark.css')}}" rel="stylesheet" type="text/css"/>
+    {!! NoCaptcha::renderJs() !!}
+
 </head>
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
 <div class="kt-grid kt-grid--ver kt-grid--root">
