@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Invoice;
 use App\Website;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -27,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('website', Website::class);
+        Route::model('invoice', Invoice::class);
     }
 
     /**

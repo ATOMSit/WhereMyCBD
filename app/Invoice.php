@@ -53,7 +53,7 @@ class Invoice extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'initial_price' => 'decimal',
+        'initial_price' => 'float',
         'pay_before' => 'datetime',
         'paid_at' => 'datetime',
         'created_at' => 'datetime',

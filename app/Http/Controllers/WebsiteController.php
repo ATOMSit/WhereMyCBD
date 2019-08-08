@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
 use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Kris\LaravelFormBuilder\Field;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
@@ -66,6 +67,7 @@ class WebsiteController extends Controller
      */
     public function store(WebsiteRequest $request)
     {
+        DB::beginTransaction();
         try {
             $id = Auth::guard('customer')->user()->id;
             $website = new Website([
@@ -85,6 +87,7 @@ class WebsiteController extends Controller
             $hostname = app(HostnameRepository::class)->create($hostname);
             app(HostnameRepository::class)->attach($hostname, $website);
 
+
             if ($request->get('offer') === 'ecommerce') {
                 $initial_price = 29.99;
             } elseif ($request->get('offer') === 'premium') {
@@ -92,15 +95,18 @@ class WebsiteController extends Controller
             } else {
                 $initial_price = 5.99;
             }
+
             $invoice = new Invoice([
                 'initial_price' => $initial_price,
                 'pay_before' => Carbon::now(),
                 'paid_at' => Carbon::now()
             ]);
             $website->invoices()->save($invoice);
+            DB::commit();
             return $request;
-        } catch (\Exception $exception) {
-            return $exception;
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
         }
     }
 

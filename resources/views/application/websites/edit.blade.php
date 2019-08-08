@@ -143,6 +143,7 @@
         <div class="row">
             <div class="col-xl-4">
                 @include('application.websites.partials.offer')
+                @include('application.websites.partials.invoices')
             </div>
             <div class="col-xl-8">
                 <div class="kt-portlet kt-portlet--tabs">

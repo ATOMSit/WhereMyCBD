@@ -124,6 +124,7 @@ License: You must have a valid license purchased only from themeforest(the above
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
                     @include('application.layouts.partials.messages')
+                    @widget('AlertExpiry', ['website' => $website])
                     <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
                         @yield('content')
                     </div>

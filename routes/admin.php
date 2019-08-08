@@ -42,6 +42,13 @@ Route::group(['middleware' => ['auth:customer']], function () {
             ->name('website.edit');
         Route::put('websites/update', 'WebsiteController@update')
             ->name('website.update');
+
+
+        Route::prefix('invoices')->as('invoice.')->group(function () {
+            Route::get('download/{invoice}','InvoiceController@show')
+                ->name('download');
+        });
+
         Route::prefix('customers')->as('customer.')->middleware('customer_menu')->group(function () {
             Route::get('my-profile', 'CustomerController@edit')
                 ->name('edit');
