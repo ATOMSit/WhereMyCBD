@@ -25,7 +25,7 @@ class AlertExpiry extends AbstractWidget
         if ($this->config['website'] === null) {
             return null;
         } else {
-            if ($this->config['website']->expires_on > Carbon::now()->subWeeks(2)) {
+            if ($this->config['website']->expires_on >= Carbon::now()->subWeeks(2)) {
                 return view('widgets.alert_expiry', [
                     'config' => $this->config,
                 ]);
