@@ -46,7 +46,7 @@ class Website extends SystemModel implements WebsiteContract
      * @var array
      */
     protected $fillable = [
-        'customer_id', 'name', 'description', 'managed_by_database_connection'
+        'customer_id', 'name', 'description', 'managed_by_database_connection', 'offer', 'status', 'renewal', 'expires_on'
     ];
 
     /**
@@ -79,6 +79,10 @@ class Website extends SystemModel implements WebsiteContract
         'name' => 'string',
         'descripton' => 'string',
         'managed_by_database_connection' => 'string',
+        'offer' => 'string',
+        'status' => 'string',
+        'renewal' => 'string',
+        'expires_on' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'
@@ -92,6 +96,16 @@ class Website extends SystemModel implements WebsiteContract
     public function hostnames(): HasMany
     {
         return $this->hasMany(Hostname::class);
+    }
+
+    /**
+     * Returns the domain names associated with the site.
+     *
+     * @return HasMany
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
     }
 
     /**

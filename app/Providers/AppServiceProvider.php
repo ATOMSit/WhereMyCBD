@@ -6,6 +6,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\CustomerRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        view()->share('website', \Request::segment(1));
     }
 }

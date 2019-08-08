@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use ArondeParon\RequestSanitizer\Sanitizers\TrimDuplicateSpaces;
 use ArondeParon\RequestSanitizer\Traits\SanitizesInputs;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class WebsiteRequest extends FormRequest
 {
@@ -33,7 +34,8 @@ class WebsiteRequest extends FormRequest
             case 'POST':
                 return [
                     'name' => 'required|string|min:2|max:255',
-                    'description' => 'nullable|string|min:2|max:500'
+                    'description' => 'nullable|string|min:2|max:500',
+                    'hostname.fqdn' => ['required', Rule::notIn(['admin', 'fr', 'atomsit'])],
                 ];
             case 'PUT':
                 return [

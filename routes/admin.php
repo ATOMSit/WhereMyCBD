@@ -11,12 +11,6 @@
 |
 */
 
-use App\Http\Requests\UserRequest;
-
-Route::get('', function () {
-    $validate = new UserRequest();
-    return $array = $validate->messages();
-});
 Route::get('/login', 'CustomerAuth\LoginController@showLoginForm')->name('login');
 Route::post('customer/login', 'CustomerAuth\LoginController@login');
 Route::post('/logout', 'CustomerAuth\LoginController@logout')->name('logout');
@@ -30,7 +24,29 @@ Route::post('/password/reset', 'CustomerAuth\ResetPasswordController@reset')->na
 Route::get('/password/reset', 'CustomerAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
 Route::get('/password/reset/{token}', 'CustomerAuth\ResetPasswordController@showResetForm');
 
-Route::prefix('{website}')->middleware(['customer', 'auth:customer', 'can:view,website'])->group(function () {
-    Route::get('/', 'UserController@index')
-        ->name('dashboard');
+
+Route::group(['middleware' => ['auth:customer']], function () {
+    Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
+    Route::get('paypal/express-checkout-success', 'PaypalController@expressCheckoutSuccess');
+    Route::post('paypal/notify', 'PaypalController@notify');
+
+    Route::get('websites/create', 'WebsiteController@create')
+        ->name('website.create');
+    Route::post('websites/store', 'WebsiteController@store')
+        ->name('website.store');
+
+    Route::prefix('{website}')->middleware(['customer', 'auth:customer', 'can:view,website'])->group(function () {
+        Route::get('/', 'WebsiteController@show')
+            ->name('dashboard');
+        Route::get('websites/settings', 'WebsiteController@edit')
+            ->name('website.edit');
+        Route::put('websites/update', 'WebsiteController@update')
+            ->name('website.update');
+        Route::prefix('customers')->as('customer.')->middleware('customer_menu')->group(function () {
+            Route::get('my-profile', 'CustomerController@edit')
+                ->name('edit');
+            Route::put('update/{id}', 'CustomerController@update')
+                ->name('update');
+        });
+    });
 });

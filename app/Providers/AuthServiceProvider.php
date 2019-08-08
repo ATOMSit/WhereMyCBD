@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Customer;
+use App\Hostname;
+use App\Policies\CustomerPolicy;
+use App\Policies\HostnamePolicy;
 use App\Policies\UserPolicy;
 use App\Policies\WebsitePolicy;
 use App\User;
@@ -17,7 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         User::class => UserPolicy::class,
-        Website::class => WebsitePolicy::class
+        Customer::class => CustomerPolicy::class,
+        Website::class => WebsitePolicy::class,
+        Hostname::class => HostnamePolicy::class,
     ];
 
     /**

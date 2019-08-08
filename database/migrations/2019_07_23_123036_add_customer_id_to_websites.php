@@ -15,7 +15,8 @@ class AddCustomerIdToWebsites extends Migration
     {
         Schema::table('websites', function (Blueprint $table) {
             $table->bigInteger('customer_id')
-                ->unsigned();
+                ->unsigned()
+                ->after('id');
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')

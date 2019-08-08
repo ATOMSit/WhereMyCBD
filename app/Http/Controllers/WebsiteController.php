@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Forms\WebsiteForm;
+use App\Hostname;
 use App\Http\Requests\WebsiteRequest;
+use App\Invoice;
 use App\Website;
+use Carbon\Carbon;
+use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
 use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
 use Illuminate\Support\Facades\Auth;
+use Kris\LaravelFormBuilder\Field;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class WebsiteController extends Controller
@@ -48,6 +53,8 @@ class WebsiteController extends Controller
             'method' => 'POST',
             'url' => route('website.store')
         ]);
+        $form->modify('offer', Field::SELECT, ['selected' => 'blog']);
+        $form->modify('renewal', Field::SELECT, ['selected' => 'automatic']);
         return view('application.websites.create', ['form' => $form]);
     }
 
@@ -59,13 +66,42 @@ class WebsiteController extends Controller
      */
     public function store(WebsiteRequest $request)
     {
-        $id = Auth::guard('customer')->user()->id;
-        $website = new Website([
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'customer_id' => $id
-        ]);
-        app(WebsiteRepository::class)->create($website);
+        try {
+            $id = Auth::guard('customer')->user()->id;
+            $website = new Website([
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
+                'customer_id' => $id,
+                'offer' => $request->get('offer'),
+                'status' => 'active',
+                'renewal' => $request->get('renewal'),
+                'expires_on' => Carbon::now()->addYear()
+            ]);
+            app(WebsiteRepository::class)->create($website);
+            $hostname = new Hostname([
+                'customer_id' => $id,
+                'fqdn' => $request->get('hostname')['fqdn']
+            ]);
+            $hostname = app(HostnameRepository::class)->create($hostname);
+            app(HostnameRepository::class)->attach($hostname, $website);
+
+            if ($request->get('offer') === 'ecommerce') {
+                $initial_price = 29.99;
+            } elseif ($request->get('offer') === 'premium') {
+                $initial_price = 19.99;
+            } else {
+                $initial_price = 5.99;
+            }
+            $invoice = new Invoice([
+                'initial_price' => $initial_price,
+                'pay_before' => Carbon::now(),
+                'paid_at' => Carbon::now()
+            ]);
+            $website->invoices()->save($invoice);
+            return $request;
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 
     /**
@@ -76,6 +112,7 @@ class WebsiteController extends Controller
      */
     public function show(Website $website)
     {
+        return view('application.websites.dashboard');
         return $website;
     }
 
@@ -87,7 +124,21 @@ class WebsiteController extends Controller
      */
     public function edit(Website $website)
     {
-        //
+        $form = $this->form(WebsiteForm::class, [
+            'method' => 'PUT',
+            'url' => route('admin.website.update', ['website' => $website]),
+            'model' => $website
+        ]);
+        $form->add('status', Field::SELECT, [
+            'choices' => [
+                'active' => 'Active',
+                'inactive' => 'Inactive',
+            ],
+            'selected' => 'active',
+        ]);
+        return view('application.websites.edit')
+            ->with('website', $website)
+            ->with('form', $form);
     }
 
     /**
@@ -99,7 +150,15 @@ class WebsiteController extends Controller
      */
     public function update(WebsiteRequest $request, Website $website)
     {
-        //
+        $website->update([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'offer' => $request->get('offer'),
+            'status' => $request->get('status'),
+            'renewal' => $request->get('renewal')
+        ]);
+        $website->save();
+        return redirect()->back()->with('success', "La configuration concernant votre site internet ont étaient mise à jour correctement.");
     }
 
     /**

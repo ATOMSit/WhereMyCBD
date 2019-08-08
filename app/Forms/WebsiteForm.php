@@ -11,10 +11,25 @@ class WebsiteForm extends Form
     {
         $this
             ->add('name', Field::TEXT, [
-                'rules' => 'required|string|min:2|max:255'
             ])
             ->add('description', Field::TEXTAREA, [
                 'rules' => 'nullable|string|min:20|max:500'
+            ])
+            ->add('offer', Field::SELECT, [
+                'choices' => [
+                    'ecommerce' => 'ECommerce',
+                    'premium' => 'Premium',
+                    'blog' => 'Blog'
+                ],
+            ])
+            ->add('renewal', Field::SELECT, [
+                'choices' => [
+                    'automatic' => 'Automatique',
+                    'manual' => 'Manuel',
+                ],
+            ])
+            ->add('hostname', 'form', [
+                'class' => HostnameForm::class,
             ])
             ->add('submit', Field::BUTTON_SUBMIT);
     }

@@ -49,17 +49,16 @@ class CustomerRequest extends FormRequest
                 ];
             case 'PUT':
                 return [
-                    'first_name' => 'required|regex:/^[A-Za-záéíóú -]+$/|min:2|max:255',
-                    'last_name' => 'required|regex:/^[A-Za-záéíóú -]+$/|min:2|max:255',
+                    'first_name' => 'required|regex:/^[A-Za-záéíóú -]+$/|min:2|max:100',
+                    'last_name' => 'required|regex:/^[A-Za-záéíóú -]+$/|min:2|max:100',
                     'description' => 'nullable|string|min:20|max:500',
                     'birthdate' => 'nullable|date',
                     'email' => 'required|email|max:255|unique:customers,email,' . $this->id,
-                    'email_verified_at' => 'nullable|datetime',
-                    'password' => 'required_with:password_confirmation|confirmed',
-                    'url_facebook' => 'nullable|url|regex:/http(s)?:\/\/(www\.)?(facebook|fb)\.com\/[A-z0-9_\-\.]+\/?',
-                    'url_instagram' => 'nullable|url|regex:/https?:\/\/(www\.)?instagram\.com\/([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)',
-                    'url_twitter' => 'nullable|url|regex:/http(s)?:\/\/(.*\.)?twitter\.com\/[A-z0-9_]+\/?',
-                    'url_linkedin' => 'nullable|url|regex:/http(s)?:\/\/([\w]+\.)?linkedin\.com\/in\/[A-z0-9_-]+\/?',
+                    'password' => 'required_with:password_confirmation|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|confirmed',
+                    'url_facebook' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+                    'url_instagram' => 'nullable|url|regex:/http(s)?:\/\/(www\.)?instagram\.com\/.+/i',
+                    'url_twitter' => 'nullable|url|regex:/http(s)?:\/\/(www\.)?twitter\.com\/.+/i',
+                    'url_linkedin' => 'nullable|url|regex:/http(s)?:\/\/([\w]+\.)?linkedin\.com\/.+/i',
                     'url_website' => 'nullable|url'
                 ];
             default:

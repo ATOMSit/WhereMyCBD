@@ -30,6 +30,12 @@ class TenancyWebsites extends AbstractMigration
                 ->nullable();
             $table->string('managed_by_database_connection')
                 ->nullable();
+            $table->enum('offer', ['ecommerce', 'premium', 'blog']);
+            $table->enum('status', ['active', 'inactive'])
+                ->default('active');
+            $table->enum('renewal', ['automatic', 'manual'])
+                ->default('automatic');
+            $table->timestamp('expires_on');
             $table->timestamps();
             $table->softDeletes();
         });

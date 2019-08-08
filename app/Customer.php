@@ -2,15 +2,17 @@
 
 namespace App;
 
-use App\Mutators\CustomerMutator;
 use App\Notifications\CustomerResetPassword;
+use Awobaz\Mutator\Mutable;
+use Hyn\Tenancy\Traits\UsesSystemConnection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class Customer extends Authenticatable
 {
-    use CustomerMutator, Notifiable;
+    use UsesSystemConnection, Mutable, Notifiable;
 
     protected $guard = 'customer';
 
@@ -76,6 +78,23 @@ class Customer extends Authenticatable
     ];
 
     /**
+     * Set the user's first name.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    protected $accessors = [
+        'first_name' => ['capitalize', 'remove_extra_whitespace'],
+        'last_name' => ['upper_case', 'remove_extra_whitespace'],
+        'description' => ['remove_extra_whitespace']
+    ];
+
+    /**
      * Send the password reset notification.
      *
      * @param string $token
@@ -91,7 +110,7 @@ class Customer extends Authenticatable
      *
      * @return HasMany
      */
-    public function Websites(): HasMany
+    public function websites(): HasMany
     {
         return $this->hasMany(Website::class);
     }

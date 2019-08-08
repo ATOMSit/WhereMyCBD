@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\GenerateSidebarMenu::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -64,6 +65,8 @@ class Kernel extends HttpKernel
         'not_platform' => \App\Http\Middleware\NotPlatform::class,
         'customer' => \App\Http\Middleware\RedirectIfNotCustomer::class,
         'customer.guest' => \App\Http\Middleware\RedirectIfCustomer::class,
+        'customer_menu' => \App\Http\Middleware\GenerateCustomerMenu::class,
+        'sidebar_menu' => \App\Http\Middleware\GenerateSidebarMenu::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

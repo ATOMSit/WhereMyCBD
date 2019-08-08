@@ -7,6 +7,7 @@ use Hyn\Tenancy\Contracts\Hostname as HostnameContract;
 use Hyn\Tenancy\Traits\UsesSystemConnection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Validation\Rule;
 
 class Hostname extends SystemModel implements HostnameContract
 {
@@ -25,7 +26,7 @@ class Hostname extends SystemModel implements HostnameContract
      * @var array
      */
     protected $fillable = [
-        'fqdn', 'redirect_to', 'force_https'
+        'customer_id', 'fqdn', 'redirect_to', 'force_https'
     ];
 
     /**
@@ -53,6 +54,7 @@ class Hostname extends SystemModel implements HostnameContract
      */
     protected $casts = [
         'id' => 'integer',
+        'customer_id' => 'integer',
         'website_id' => 'integer',
         'fqdn' => 'string',
         'redirect_to' => 'string',
@@ -62,6 +64,18 @@ class Hostname extends SystemModel implements HostnameContract
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
+
+    /**
+     *
+     *
+     * @return array
+     */
+    static function create_rules()
+    {
+        return [
+            'fqnd' => ['required', Rule::notIn(['admin', 'fr', 'atomsit'])],
+        ];
+    }
 
     /**
      * Returns the site associated with the domain name.
