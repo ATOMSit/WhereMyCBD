@@ -38,7 +38,9 @@ Route::group(['middleware' => ['auth:customer']], function () {
     Route::prefix('{website}')->middleware(['customer', 'auth:customer', 'can:view,website'])->group(function () {
         Route::get('/', 'WebsiteController@show')
             ->name('dashboard');
-        Route::get('websites/settings', 'WebsiteController@edit')
+        Route::get('websites/settings', function (){
+            return view('application.welcome');
+        })
             ->name('website.edit');
         Route::put('websites/update', 'WebsiteController@update')
             ->name('website.update');
