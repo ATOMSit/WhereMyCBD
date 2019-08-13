@@ -99,16 +99,6 @@ class Website extends SystemModel implements WebsiteContract
     }
 
     /**
-     * Returns the domain names associated with the site.
-     *
-     * @return HasMany
-     */
-    public function invoices(): HasMany
-    {
-        return $this->hasMany(Invoice::class);
-    }
-
-    /**
      * Returns the customer of this website
      *
      * @return BelongsTo

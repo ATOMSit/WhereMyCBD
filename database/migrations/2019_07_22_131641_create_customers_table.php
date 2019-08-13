@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCustomersTable extends Migration
 {
@@ -38,6 +39,24 @@ class CreateCustomersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        Schema::table('websites', function (Blueprint $table) {
+            $table->bigInteger('customer_id')
+                ->unsigned()
+                ->after('id');
+            $table->foreign('customer_id')
+                ->references('id')
+                ->on('customers')
+                ->onDelete('cascade');
+        });
+        Schema::table('hostnames', function (Blueprint $table) {
+            $table->bigInteger('customer_id')
+                ->unsigned()
+                ->after('id');
+            $table->foreign('customer_id')
+                ->references('id')
+                ->on('customers')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -48,5 +67,11 @@ class CreateCustomersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('customers');
+        Schema::table('websites', function (Blueprint $table) {
+            $table->dropColumn('customer_id');
+        });
+        Schema::table('hostnames', function (Blueprint $table) {
+            $table->dropColumn('customer_id');
+        });
     }
 }
