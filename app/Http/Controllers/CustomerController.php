@@ -93,7 +93,7 @@ class CustomerController extends Controller
         $this->authorize('update', $customer);
         $form = $this->form(CustomerForm::class, [
             'method' => 'PUT',
-            'url' => route('admin.customer.update', ['website' => $this->website, 'id' => $customer->id]),
+            'url' => route('admin.customers.update', ['id' => $customer->id]),
             'model' => $customer
         ])->remove('password');
         return view('application.customers.edit')

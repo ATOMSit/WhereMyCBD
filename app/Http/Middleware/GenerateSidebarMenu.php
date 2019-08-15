@@ -16,7 +16,7 @@ class GenerateSidebarMenu
     public function handle($request, Closure $next)
     {
         \Menu::make('sidebar_menu', function ($menu) {
-            $menu->add('INFORMATIONS PERSONNELLES', ['icon' => 'fa fa-user', 'id' => "user-1", 'route' => ['admin.customer.edit', 'website' => \Request::segment(1)]]);
+            $menu->add('INFORMATIONS PERSONNELLES', ['icon' => 'fa fa-user', 'id' => "user-1", 'route' => ['admin.customers.edit']]);
             $menu->add('SITES INTERNET', ['icon' => 'fa fa-sitemap', 'id' => "website-1"]);
             $menu->add('Créer un nouveau site', ['route' => ['admin.website.create'], 'parent' => 'website-1']);
         });

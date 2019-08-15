@@ -46,7 +46,7 @@ class Website extends SystemModel implements WebsiteContract
      * @var array
      */
     protected $fillable = [
-        'customer_id', 'name', 'description', 'managed_by_database_connection', 'offer', 'status', 'renewal', 'expires_on'
+        'customer_id', 'name', 'description', 'managed_by_database_connection'
     ];
 
     /**
@@ -79,10 +79,6 @@ class Website extends SystemModel implements WebsiteContract
         'name' => 'string',
         'descripton' => 'string',
         'managed_by_database_connection' => 'string',
-        'offer' => 'string',
-        'status' => 'string',
-        'renewal' => 'string',
-        'expires_on' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'

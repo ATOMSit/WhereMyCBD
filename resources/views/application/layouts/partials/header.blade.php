@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="kt-notification">
-                    <a href="{{route('admin.customer.edit',['website'=>$website])}}" class="kt-notification__item">
+                    <a href="{{route('admin.customers.edit')}}" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-calendar-3 kt-font-success"></i>
                         </div>

@@ -67,6 +67,8 @@ class WebsiteController extends Controller
      */
     public function store(WebsiteRequest $request)
     {
+
+
         DB::beginTransaction();
         try {
             $id = Auth::guard('customer')->user()->id;

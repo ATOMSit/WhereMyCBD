@@ -1,7 +1,6 @@
 @extends('application.layouts.app')
 
 @section('content')
-
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         @if($website->renewal === 'manual')
             <div class="alert alert-primary fade show" role="alert">

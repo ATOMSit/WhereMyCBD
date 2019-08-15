@@ -4,15 +4,17 @@ namespace App;
 
 use App\Notifications\CustomerResetPassword;
 use Awobaz\Mutator\Mutable;
+use Greabock\Tentacles\EloquentTentacle;
 use Hyn\Tenancy\Traits\UsesSystemConnection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Cashier\Billable;
 
 class Customer extends Authenticatable
 {
-    use UsesSystemConnection, Mutable, Notifiable, \App\Traits\Billable;
+    use UsesSystemConnection,EloquentTentacle ,Mutable, Notifiable, Billable;
 
     protected $guard = 'customer';
 

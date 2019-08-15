@@ -156,7 +156,6 @@ return [
          */
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Awobaz\Mutator\MutatorServiceProvider::class,
-        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -217,6 +216,5 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
         'Mutator' => Awobaz\Mutator\Facades\Mutator::class,
-        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
     ],
 ];
